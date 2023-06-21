@@ -25,15 +25,3 @@ resource "helm_release" "argocd" {
     value = "true"
   }
 }
-
-data "kubernetes_secret" "argocd" {
-  metadata {
-    name      = "argocd-secret"
-    namespace = kubernetes_namespace.argocd.metadata[0].name
-  }
-}
-
-output "argocd_password" {
-  value     = data.kubernetes_secret.argocd.data["clearPassword"]
-  sensitive = true
-}
